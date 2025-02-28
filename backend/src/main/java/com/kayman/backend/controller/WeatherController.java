@@ -7,11 +7,15 @@ import com.kayman.backend.service.CoordinatesService;
 import com.kayman.backend.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin
 public class WeatherController {
 
     private final CoordinatesService coordinatesService;
@@ -24,7 +28,7 @@ public class WeatherController {
     }
 
     @GetMapping({"", "/"})
-    public WeatherResponse index(@RequestParam(required = false) String city) {
+    public List<com.kayman.backend.model.List> index(@RequestParam(required = false) String city) {
 
         if (city != null) {
             Coordinates[] coordinates = coordinatesService.findCoordinatesByName(city);
@@ -36,7 +40,7 @@ public class WeatherController {
 
             System.out.println(response.getList().getFirst().getMain().getTemp());
 
-            return new WeatherResponse(city, response.getList().getFirst().getMain().getTemp());
+            return response.getList();
         }
 
         System.out.println("Nie podano miasta");
