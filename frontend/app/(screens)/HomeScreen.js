@@ -35,7 +35,7 @@ const HomeScreen = () => {
     return (
         <View>
             {data.length === 0 ? (
-                <Text>Ładowanie danych...</Text>
+                <Text className={"text-4xl"}>Ładowanie danych...</Text>
             ) : (
                 <ScrollView horizontal={true}>
 

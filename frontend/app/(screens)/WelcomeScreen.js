@@ -4,8 +4,8 @@ import {useNavigation} from "@react-navigation/native";
 
 const WelcomeScreen = () => {
     const navigation = useNavigation();
-    return <View>
-        <Button onPress={() => navigation.navigate("Home") }>Przejdz do ...</Button>
+    return <View className="flex-1 bg-amber-600">
+        <Button className={"bg-black"} onPress={() => navigation.navigate("Home") }>Przejdz do ...</Button>
     </View>
 }
 
