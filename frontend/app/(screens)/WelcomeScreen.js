@@ -1,6 +1,7 @@
-import { View, Image, Button, Text } from "react-native";
+import { View, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {Button} from "@rneui/base";
 
 const WelcomeScreen = () => {
     const navigation = useNavigation();
@@ -18,9 +19,19 @@ const WelcomeScreen = () => {
                 />
 
                 <Button
-                    title="Welcome Backa!"
+                    title="GET STARTED  "
+                    size={"lg"}
+                    radius={100}
+                    titleStyle={{fontSize: 24}}
+                    icon={{
+                        name: 'play',
+                        type: 'font-awesome',
+                        size: 15,
+                        color: 'white',
+                    }}
+                    iconRight={true}
                     onPress={() => navigation.navigate("Home")}
-                    className={"rounded-lg bg-black w-full"}
+                    className={"rounded-3xl bg-black w-full p-5"}
                     color={"#026463"}
                 />
             </View>

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {FlatList, View, Text, Dimensions, ScrollView} from "react-native";
 import {LineChart} from "react-native-chart-kit";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const HomeScreen = () => {
     const [data, setData] = useState([]);
     const [labels, setLabels] = useState([]);
     const [temperature, setTemperature] = useState([]);
+    const [today, setToday] = useState(null);
 
     const parseDate = (dt) => {
         const date = new Date(dt*1000);
@@ -32,8 +34,25 @@ const HomeScreen = () => {
         fetchData();
     }, []);
 
+    const getToday = () => {
+        const today = new Date();
+
+        const dayName = today.toLocaleDateString('pl-PL', { weekday: 'long' });
+
+        return dayName.charAt(0).toUpperCase() + dayName.slice(1);
+    }
+
+    const getDate = () => {
+        const today = new Date();
+
+        return today.toLocaleDateString('pl-PL');
+    }
+
     return (
+        <SafeAreaView className={"bg-primary h-full"}>
         <View>
+            <Text> Dziś jest {getToday()},</Text>
+            <Text> {getDate()}</Text>
             {data.length === 0 ? (
                 <Text className={"text-4xl"}>Ładowanie danych...</Text>
             ) : (
@@ -80,6 +99,7 @@ const HomeScreen = () => {
                 </ScrollView>
             )}
         </View>
+        </SafeAreaView>
     );
 };
 
