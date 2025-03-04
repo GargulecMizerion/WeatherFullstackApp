@@ -10,8 +10,8 @@ const Stack = createNativeStackNavigator();
 export default function Index() {
     return (
         <SafeAreaProvider>
-            <Stack.Navigator>
-                <Stack.Screen name="Welcome" component={WelcomeScreen} options={{headerShown: false}} />
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen name="Welcome" component={WelcomeScreen} />
                 <Stack.Screen name="Home" component={HomeScreen} />
             </Stack.Navigator>
             <StatusBar  backgroundColor={"#FDFAE9"}/>

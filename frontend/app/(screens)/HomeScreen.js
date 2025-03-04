@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {FlatList, View, Text, Dimensions, ScrollView} from "react-native";
+import {FlatList, View, Text, Dimensions, ScrollView, TextInput} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import {SafeAreaView} from "react-native-safe-area-context";
 
@@ -8,7 +8,7 @@ const HomeScreen = () => {
     const [data, setData] = useState([]);
     const [labels, setLabels] = useState([]);
     const [temperature, setTemperature] = useState([]);
-    const [today, setToday] = useState(null);
+    const [cityName, setCityName] = useState("");
 
     const parseDate = (dt) => {
         const date = new Date(dt*1000);
@@ -50,9 +50,10 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView className={"bg-primary h-full"}>
-        <View>
-            <Text> Dziś jest {getToday()},</Text>
-            <Text> {getDate()}</Text>
+        <View className={"mt-5 ml-2"}>
+            <Text className={"text-center text-4xl "}> Dziś jest <Text className={"text-sea font-bold"}>{getToday()}</Text>,</Text>
+            <Text className={"text-center text-3xl"}> {getDate()}</Text>
+            <TextInput  color={"white"} className={"bg-sea mr-2 p-2"} borderRadius={5}/>
             {data.length === 0 ? (
                 <Text className={"text-4xl"}>Ładowanie danych...</Text>
             ) : (
