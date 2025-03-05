@@ -4,6 +4,7 @@ import {View, Text, ScrollView, TextInput, Platform} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Button} from "@rneui/base";
+import WeatherComponent from "@/app/components/WeatherComponent";
 
 
 const HomeScreen = () => {
@@ -17,9 +18,7 @@ const HomeScreen = () => {
 
     const parseDate = (dt) => {
         const date = new Date(dt*1000);
-
         const formattedDateTime = `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-
         return formattedDateTime;
     }
 
@@ -34,11 +33,6 @@ const HomeScreen = () => {
         }
     };
 
-    // useEffect(() => {
-    //
-    //     fetchData();
-    // }, []);
-
     const getToday = () => {
         const today = new Date();
         const dayName = today.toLocaleDateString('pl-PL', { weekday: 'long' });
@@ -51,16 +45,15 @@ const HomeScreen = () => {
     }
 
     const handleSearch = (city) => {
-        setCityName(city);
         fetchData(city);
     }
 
     return (
         <SafeAreaView className={"bg-primary h-full"}>
         <View className={"mt-5"}>
-            <Text className={"text-center text-4xl "}> Dziś jest <Text className={"text-sea font-bold"}>{getToday()}</Text>,</Text>
-            <Text className={"text-center text-3xl"}> {getDate()}</Text>
-            <View className={"flex-row gap-2 m-2 items-center"} style={{ height: 50 }}>
+            <Text className={"text-center text-4xl mt-2"}> Dziś jest <Text className={"text-sea font-bold"}>{getToday()}</Text>,</Text>
+            <Text className={"text-center text-3xl mt-2"}> {getDate()}</Text>
+            <View className={"flex-row gap-2 m-2 items-center mt-4"} style={{ height: 50 }}>
                 <TextInput
                     color={"white"}
                     className={"bg-sea p-2"}
@@ -102,52 +95,15 @@ const HomeScreen = () => {
                         alignItems: "center",
                         alignSelf: "center",
                     }}
-                    onPress={() => fetchData(cityName)}
+                    onPress={() => handleSearch(cityName)}
                 />
             </View>
-            {cityName === "" ? (
+            {data.length === 0 ? (
                 <Text className={"text-4xl"}>Wyszukaj swoje miasto</Text>
             ) : (
-                data.length === 0 ? null : (
-                    <ScrollView horizontal={true}>
-                        <LineChart
-                            data={{
-                                labels: labels,
-                                datasets: [
-                                    {
-                                        data: temperature,
-                                    }
-                                ]
-                            }}
-                            width={Math.max(800, labels.length * 150)} // from react-native
-                            height={220}
-                            yAxisSuffix="°C"
-                            yAxisInterval={1} // optional, defaults to 1
-                            chartConfig={{
-                                backgroundColor: "#e26a00",
-                                backgroundGradientFrom: "#fb8c00",
-                                backgroundGradientTo: "#ffa726",
-                                decimalPlaces: 1, // optional, defaults to 2dp
-                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                style: {
-                                    borderRadius: 16
-                                },
-                                propsForDots: {
-                                    r: "6",
-                                    strokeWidth: "2",
-                                    stroke: "#ffa726"
-                                }
-                            }}
-                            bezier
-                            style={{
-                                marginVertical: 8,
-                                marginRight: 5,
-                                borderRadius: 16
-                            }}
-                        />
-                    </ScrollView>
-                )
+
+                  <WeatherComponent labels={labels} temperature={temperature} current={data[0]} />
+
             )}
         </View>
         </SafeAreaView>
